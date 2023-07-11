@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import ApplyForm from "./pages/ApplyForm";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -20,6 +21,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/apply-form"
+              element={
+                <ProtectedRoute>
+                  <ApplyForm />
                 </ProtectedRoute>
               }
             />
