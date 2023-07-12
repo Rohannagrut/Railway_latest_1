@@ -3,18 +3,18 @@ const userModel = require("../models/userModels");
 
 const getAllUsersController = async (req, res) => {
   try {
-    const users = await userModel.findOne({ _id: req.body.userId });
+    const doctors = await railwayModel.find({});
     res.status(200).send({
       success: true,
-      message: "All Users data",
-      data: users,
+      message: "Doctors Data list",
+      data: doctors,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
+      message: "error while getting doctors data",
       error,
-      message: "Error fetching users",
     });
   }
 };

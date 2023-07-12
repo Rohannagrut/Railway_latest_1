@@ -35,7 +35,7 @@ export const adminMenu = [
   },
 
   {
-    name: "Doctors",
+    name: "Applicants",
     path: "/admin/doctors",
     icon: "fa-solid fa-user-doctor",
   },

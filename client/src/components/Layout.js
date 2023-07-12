@@ -4,7 +4,7 @@ import { adminMenu, userMenu } from "./../Data/data";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Avatar, Badge, message } from "antd";
+import { Badge, message } from "antd";
 const Layout = ({ children }) => {
   const { user } = useSelector((state) => state.user);
   const location = useLocation();
@@ -15,7 +15,31 @@ const Layout = ({ children }) => {
     message.success("Logout Successfully");
     navigate("/login");
   };
+  // ==== Doctormenu =====
+  const userMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "fa-solid fa-house",
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: "fa-solid fa-list",
+    },
+    {
+      name: "Apply Form",
+      path: "/apply-form",
+      icon: "fa-solid fa-user-doctor",
+    },
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: "fa-solid fa-user",
+    },
+  ];
 
+  // =======Doctor menu====
   // redering menu list
   const SidebarMenu = user?.isAdmin ? adminMenu : userMenu;
   return (
