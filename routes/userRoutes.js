@@ -30,4 +30,7 @@ router.post("/apply-form", authMiddleware, authApplyController);
 
 // NOTIFICATION || post
 router.post("/get-all-notification", authMiddleware, geAllController);
+
+// NOTIFICATION DELete || post
+// router.post("/delete-all-notification", authMiddleware, geAllController);
 module.exports = router;

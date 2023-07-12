@@ -63,6 +63,15 @@ const NotificationPage = () => {
               Delete All Read
             </h4>
           </div>
+          {user?.seennotification.map((notificationMgs) => (
+            <div
+              className="card"
+              style={{ cursor: "pointer" }}
+              // onClick={() => navigate(notificationMgs.onClickPath)}
+            >
+              <div className="card-text">{notificationMgs.message}</div>
+            </div>
+          ))}
         </Tabs.TabPane>
       </Tabs>
     </Layout>

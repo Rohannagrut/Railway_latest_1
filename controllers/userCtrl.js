@@ -161,7 +161,7 @@ const geAllController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error WHile Applying For Doctotr",
+      message: "Error WHile Applying in notification",
     });
   }
 };
