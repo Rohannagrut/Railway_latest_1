@@ -1,10 +1,41 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Tabs } from "antd";
-import { useSelector } from "react-redux";
+import { Tabs, message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { hideLoading, showLoading } from "../redux/features/alertSlice";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const NotificationPage = () => {
   const { user } = useSelector((state) => state.user);
-  const handleMarkAllRead = () => {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleMarkAllRead = async () => {
+    try {
+      dispatch(showLoading());
+      const res = await axios.post(
+        "/api/v1/user/get-all-notification",
+        {
+          userId: user._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (res.data.success) {
+        message.success(res.data.message);
+      } else {
+        message.error(res.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.log(error);
+      message.error("something went wrong");
+    }
+  };
   const handleDeleteAllRead = () => {};
   return (
     <Layout>
@@ -17,7 +48,11 @@ const NotificationPage = () => {
             </h4>
           </div>
           {user?.notifcation.map((notificationMgs) => (
-            <div className="card" onClick={notificationMgs.onClickPath}>
+            <div
+              className="card"
+              style={{ cursor: "pointer" }}
+              // onClick={() => navigate(notificationMgs.onClickPath)}
+            >
               <div className="card-text">{notificationMgs.message}</div>
             </div>
           ))}
