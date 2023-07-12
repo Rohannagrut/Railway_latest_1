@@ -7,7 +7,8 @@ import Spinner from "./components/Spinner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import ApplyForm from "./pages/ApplyForm";
-import ApplyDoctor from "./pages/ApplyDoctor";
+import NotificationPage from "./pages/NotificationPage";
+// import ApplyDoctor from "./pages/ApplyDoctor";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -41,6 +42,14 @@ function App() {
                 </ProtectedRoute>
               }
             /> */}
+            <Route
+              path="/notification"
+              element={
+                <ProtectedRoute>
+                  <NotificationPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/login"
               element={

@@ -89,7 +89,7 @@ const authApplyController = async (req, res) => {
 
     notifcation.push({
       type: `apply-doctor-request`,
-      message: `${newRailway.fullName} ${newRailway.lastName} has applied for a concession `,
+      message: `${newRailway.firstName} ${newRailway.lastName} has applied for a concession `,
       data: {
         doctorId: newRailway._id,
         name: newRailway.firstName + " " + newRailway.lastName,
@@ -141,10 +141,36 @@ const authApplyController = async (req, res) => {
 //   }
 // };
 
+// NOTIFICATION controller
+const geAllController = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    const seennotification = user.seennotification;
+    const notifcation = user.notifcation;
+    seennotification.push(...notifcation);
+    user.notifcation = [];
+    user.seennotification = notifcation;
+    const updatedUser = await user.save();
+    res.status(200).send({
+      success: true,
+      message: "All notification marked as read",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error WHile Applying For Doctotr",
+    });
+  }
+};
+
 module.exports = {
   loginController,
   registerController,
   authController,
   authApplyController,
   // applyDoctorController,
+  geAllController,
 };
