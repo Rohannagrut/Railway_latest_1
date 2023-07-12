@@ -1,20 +1,22 @@
 import React from "react";
-import Layout from "../components/Layout";
-import { Col, Form, Input, Row, DatePicker, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import Layout from "./../components/Layout";
+import { Col, Form, Input, Row, TimePicker, message } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { hideLoading, showLoading } from "../redux/features/alertSlice";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import axios from "axios";
-const ApplyForm = () => {
+
+const ApplyDoctor = () => {
   const { user } = useSelector((state) => state.user);
-  const { RangePicker } = DatePicker;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //handle form
   const handleFinish = async (values) => {
     try {
-      dispatch(showLoading);
+      dispatch(showLoading());
       const res = await axios.post(
-        "/api/v1/user/apply-form",
+        "/api/v1/user/apply-doctor",
         { ...values, userId: user._id },
         {
           headers: {
@@ -22,7 +24,7 @@ const ApplyForm = () => {
           },
         }
       );
-      dispatch(hideLoading);
+      dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.success);
         navigate("/");
@@ -30,16 +32,16 @@ const ApplyForm = () => {
         message.error(res.data.success);
       }
     } catch (error) {
-      dispatch(hideLoading);
+      dispatch(hideLoading());
       console.log(error);
-      message.error("Something went wrong");
+      message.error("Somthing Went Wrrong ");
     }
   };
   return (
     <Layout>
-      <h1 className="text-center">Apply here</h1>
+      <h1 className="text-center">Apply Doctor</h1>
       <Form layout="vertical" onFinish={handleFinish} className="m-3">
-        <h4>Personal Details :</h4>
+        <h4 className="">Personal Details : </h4>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
@@ -61,7 +63,6 @@ const ApplyForm = () => {
               <Input type="text" placeholder="your last name" />
             </Form.Item>
           </Col>
-
           <Col xs={24} md={24} lg={8}>
             <Form.Item
               label="Phone No"
@@ -74,77 +75,17 @@ const ApplyForm = () => {
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
-              label="Your Age"
-              name="age"
+              label="Email"
+              name="email"
               required
               rules={[{ required: true }]}
             >
-              <Input type="text" placeholder="your age" />
+              <Input type="email" placeholder="your email address" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Enter you'r Birthdate"
-              name="birth"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="your Birthday" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Registration no"
-              name="registration"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="registration no" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="sex"
-              name="sex"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="sex" />
-            </Form.Item>
-          </Col>
-        </Row>
-        {/* railway details */}
-        <h4> Railway Form Details </h4>
-        <Row gutter={20}>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="From"
-              name="from"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="From" />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="To"
-              name="to"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="To" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Caste"
-              name="caste"
-              required
-              rules={[{ required: true }]}
-            >
-              <Input type="text" placeholder="your caste" />
+            <Form.Item label="Website" name="website">
+              <Input type="text" placeholder="your website" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
@@ -154,43 +95,52 @@ const ApplyForm = () => {
               required
               rules={[{ required: true }]}
             >
-              <Input type="text" placeholder="Your address" />
+              <Input type="text" placeholder="your clinic address" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <h4>Professional Details :</h4>
+        <Row gutter={20}>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              label="Specialization"
+              name="specialization"
+              required
+              rules={[{ required: true }]}
+            >
+              <Input type="text" placeholder="your specialization" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
-              label="Season Ticket No"
-              name="seasonticketNo"
+              label="Experience"
+              name="experience"
               required
               rules={[{ required: true }]}
             >
-              <Input type="text" placeholder="Season Ticket no" />
+              <Input type="text" placeholder="your experience" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
-              label="Reason for applying "
-              name="reason"
+              label="Fees Per Cunsaltation"
+              name="feesPerCunsaltation"
               required
               rules={[{ required: true }]}
             >
-              <Input type="text" placeholder="Internship purpose" />
+              <Input type="text" placeholder="your contact no" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Timings"
-              name="timings"
-              required
-              rules={[{ required: true }]}
-            >
-              <RangePicker />
+            <Form.Item label="Timings" name="timings" required>
+              <TimePicker.RangePicker format="HH:mm" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}></Col>
-
           <Col xs={24} md={24} lg={8}>
-            <button className="btn btn-primary form-btn">Submit</button>
+            <button className="btn btn-primary form-btn" type="submit">
+              Submit
+            </button>
           </Col>
         </Row>
       </Form>
@@ -198,4 +148,4 @@ const ApplyForm = () => {
   );
 };
 
-export default ApplyForm;
+export default ApplyDoctor;

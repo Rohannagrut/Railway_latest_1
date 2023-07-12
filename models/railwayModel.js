@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
-const dataSchema = new mongoose.Schema(
+const railwaySchema = new mongoose.Schema(
   {
-    fullName: {
+    userId: {
       type: String,
-      require: [true, "first name is required"],
+    },
+    firstName: {
+      type: String,
+      required: [true, "first name is required"],
+    },
+    lastName: {
+      type: String,
+      required: [true, "last name is required"],
     },
     phone: {
       type: String,
@@ -18,7 +25,7 @@ const dataSchema = new mongoose.Schema(
       required: [true, "birth is required"],
     },
     registration: {
-      type: Number,
+      type: String,
       required: [true, "registration no is required"],
     },
     sex: {
@@ -42,11 +49,16 @@ const dataSchema = new mongoose.Schema(
       required: [true, "address is required"],
     },
     seasonticketNo: {
-      type: Number,
+      type: String,
+      required: [true, "Season ticket no is required"],
     },
     reason: {
       type: String,
       required: [true, "reason is required"],
+    },
+    status: {
+      type: String,
+      default: "pending",
     },
     timings: {
       type: Object,
@@ -55,5 +67,5 @@ const dataSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const dataModel = mongoose.model("users", dataSchema);
-module.exports = dataSchema;
+const railwayModel = mongoose.model("railways", railwaySchema);
+module.exports = railwayModel;
